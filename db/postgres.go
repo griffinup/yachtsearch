@@ -46,7 +46,7 @@ func (r *PostgresRepository) ListYachts(ctx context.Context, skip uint64, take u
 	yachts := []schema.Yacht{}
 	for rows.Next() {
 		yacht := schema.Yacht{}
-		if err = rows.Scan(&yacht.ID, &yacht.Name, &meow.Company); err == nil {
+		if err = rows.Scan(&yacht.ID, &yacht.Name, &yacht.Company); err == nil {
 			yacht = append(yachts, yacht)
 		}
 	}
