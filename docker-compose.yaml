@@ -1,0 +1,44 @@
+version: "3.6"
+
+services:
+  update:
+    build: "."
+    command: "update-service"
+    depends_on:
+      - "postgres"
+    ports:
+      - "8080"
+    environment:
+      POSTGRES_DB: "meower"
+      POSTGRES_USER: "meower"
+      POSTGRES_PASSWORD: "123456"
+      NAUSYS_USER: "rest83@TTTTT"
+      NAUSYS_PASSWORD: "Rest59Tb"
+  search:
+    build: "."
+    command: "search-service"
+    depends_on:
+      - "postgres"
+    ports:
+      - "8080"
+    environment:
+      POSTGRES_DB: "yachtsearch"
+      POSTGRES_USER: "yachtsearch"
+      POSTGRES_PASSWORD: "123456"
+      ELASTICSEARCH_ADDRESS: "elasticsearch:9200"
+  postgres:
+    build: "./postgres"
+    restart: "always"
+    environment:
+      POSTGRES_DB: "yachtsearch"
+      POSTGRES_USER: "yachtsearch"
+      POSTGRES_PASSWORD: "123456"
+  elasticsearch:
+    image: 'docker.elastic.co/elasticsearch/elasticsearch:6.2.3'
+  nginx:
+    build: "./nginx"
+    ports:
+      - "8080:80"
+    depends_on:
+      - "update"
+      - "search"

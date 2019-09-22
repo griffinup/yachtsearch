@@ -1,0 +1,12 @@
+DROP TABLE IF EXISTS yachts;
+CREATE TABLE yachts (
+  id VARCHAR(32) PRIMARY KEY,
+  name VARCHAR(32) NOT NULL,
+  company VARCHAR(32) NOT NULL
+);
+
+DROP TABLE IF EXISTS yachtbuilders;
+CREATE TABLE yachtbuilders (
+  id VARCHAR(32) PRIMARY KEY,
+  name VARCHAR(64) NOT NULL
+);
