@@ -3,7 +3,6 @@ package db
 import (
 	"context"
 	"database/sql"
-
 	_ "github.com/lib/pq"
 	"github.com/griffinup/yachtsearch/schema"
 )
@@ -47,7 +46,7 @@ func (r *PostgresRepository) ListYachts(ctx context.Context, skip uint64, take u
 	for rows.Next() {
 		yacht := schema.Yacht{}
 		if err = rows.Scan(&yacht.ID, &yacht.Name, &yacht.Company); err == nil {
-			yacht = append(yachts, yacht)
+			yachts = append(yachts, yacht)
 		}
 	}
 	if err = rows.Err(); err != nil {
