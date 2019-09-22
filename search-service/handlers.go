@@ -7,7 +7,6 @@ import (
 	"strconv"
 
 	"github.com/griffinup/yachtsearch/db"
-	"github.com/griffinup/yachtsearch/event"
 	"github.com/griffinup/yachtsearch/schema"
 	"github.com/griffinup/yachtsearch/search"
 	"github.com/griffinup/yachtsearch/util"

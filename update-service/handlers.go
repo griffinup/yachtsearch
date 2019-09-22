@@ -3,14 +3,12 @@ package main
 import (
 	"bytes"
 	"encoding/xml"
-	"fmt"
-	"html/template"
+	//"fmt"
+	//"html/template"
 	"io/ioutil"
 	"log"
 	"net/http"
-	"time"
 
-	"github.com/segmentio/ksuid"
 	"github.com/griffinup/yachtsearch/db"
 	"github.com/griffinup/yachtsearch/schema"
 	"github.com/griffinup/yachtsearch/util"

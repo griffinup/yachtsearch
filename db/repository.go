@@ -3,7 +3,7 @@ package db
 import (
 	"context"
 
-	"github.com/tinrab/meower/schema"
+	"github.com/griffinup/yachtsearch/schema"
 )
 
 type Repository interface {
