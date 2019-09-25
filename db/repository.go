@@ -9,7 +9,9 @@ import (
 type Repository interface {
 	Close()
 	InsertYacht(ctx context.Context, yacht schema.Yacht) error
-	ListYachts(ctx context.Context, skip uint64, take uint64) ([]schema.Yacht, error)
+	InsertCompany(ctx context.Context, company schema.Company) error
+	InsertModel(ctx context.Context, model schema.Model) error
+	SearchYachts(ctx context.Context, query string, skip uint64, take uint64) ([]schema.YachtFull, error)
 }
 
 var impl Repository
@@ -26,6 +28,14 @@ func InsertYacht(ctx context.Context, yacht schema.Yacht) error {
 	return impl.InsertYacht(ctx, yacht)
 }
 
-func ListYachts(ctx context.Context, skip uint64, take uint64) ([]schema.Yacht, error) {
-	return impl.ListYachts(ctx, skip, take)
+func InsertCompany(ctx context.Context, company schema.Company) error {
+	return impl.InsertCompany(ctx, company)
+}
+
+func InsertModel(ctx context.Context, model schema.Model) error {
+	return impl.InsertModel(ctx, model)
+}
+
+func SearchYachts(ctx context.Context, query string, skip uint64, take uint64) ([]schema.YachtFull, error) {
+	return impl.SearchYachts(ctx, query, skip, take)
 }

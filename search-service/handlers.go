@@ -1,14 +1,16 @@
 package main
 
 import (
-	"context"
-	"log"
+	//"context"
+	//"log"
 	"net/http"
 	"strconv"
 
+	//"strconv"
+
 	"github.com/griffinup/yachtsearch/db"
-	"github.com/griffinup/yachtsearch/schema"
-	"github.com/griffinup/yachtsearch/search"
+	//"github.com/griffinup/yachtsearch/schema"
+	//"github.com/griffinup/yachtsearch/search"
 	"github.com/griffinup/yachtsearch/util"
 )
 
@@ -59,12 +61,31 @@ func searchYachtsHandler(w http.ResponseWriter, r *http.Request) {
 		util.ResponseError(w, http.StatusBadRequest, "Missing query parameter")
 		return
 	}
+	skip := uint64(0)
+	skipStr := r.FormValue("skip")
+	take := uint64(100)
+	takeStr := r.FormValue("take")
+	if len(skipStr) != 0 {
+		skip, err = strconv.ParseUint(skipStr, 10, 64)
+		if err != nil {
+			util.ResponseError(w, http.StatusBadRequest, "Invalid skip parameter")
+			return
+		}
+	}
+	if len(takeStr) != 0 {
+		take, err = strconv.ParseUint(takeStr, 10, 64)
+		if err != nil {
+			util.ResponseError(w, http.StatusBadRequest, "Invalid take parameter")
+			return
+		}
+	}
 
 	// Search yachts
-	yachts, err := search.SearchYachts(ctx, query)
+	yachts, err := db.SearchYachts(ctx, query, skip, take)
 	if err != nil {
-		log.Println(err)
-		util.ResponseOk(w, []schema.Yacht{})
+		//log.Println(err)
+		//util.ResponseOk(w, []schema.Yacht{})
+		util.ResponseOk(w, err.Error())
 		return
 	}
 

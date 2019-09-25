@@ -1,0 +1,44 @@
+version: "3.6"
+
+services:
+  update:
+    build: "."
+    command: "update-service"
+    depends_on:
+      - "postgres"
+    ports:
+      - "8080"
+    environment:
+      POSTGRES_DB: "yachtsearch"
+      POSTGRES_USER: "yachtsearch"
+      POSTGRES_PASSWORD: "123456"
+      NAUSYS_USER: ""
+      NAUSYS_PASSWORD: ""
+
+  search:
+    build: "."
+    command: "search-service"
+    depends_on:
+      - "postgres"
+    ports:
+      - "8080"
+    environment:
+      POSTGRES_DB: "yachtsearch"
+      POSTGRES_USER: "yachtsearch"
+      POSTGRES_PASSWORD: "123456"
+  postgres:
+    build: "./postgres"
+    restart: "always"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: "yachtsearch"
+      POSTGRES_USER: "yachtsearch"
+      POSTGRES_PASSWORD: "123456"
+  nginx:
+    build: "./nginx"
+    ports:
+      - "8080:80"
+    depends_on:
+      - "update"
+      - "search"

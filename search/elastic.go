@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"log"
+	"strconv"
 
 	"github.com/olivere/elastic"
 	"github.com/griffinup/yachtsearch/schema"
@@ -31,7 +32,7 @@ func (r *ElasticRepository) InsertYacht(ctx context.Context, yacht schema.Yacht)
 	_, err := r.client.Index().
 		Index("yachts").
 		Type("yacht").
-		Id(yacht.ID).
+		Id(strconv.Itoa(yacht.ID)).
 		BodyJson(yacht).
 		Refresh("wait_for").
 		Do(ctx)
@@ -42,7 +43,7 @@ func (r *ElasticRepository) SearchYachts(ctx context.Context, query string, skip
 	result, err := r.client.Search().
 		Index("yachts").
 		Query(
-			elastic.NewMultiMatchQuery(query, "body").
+			elastic.NewMultiMatchQuery(query, "name").
 				Fuzziness("3").
 				PrefixLength(1).
 				CutoffFrequency(0.0001),

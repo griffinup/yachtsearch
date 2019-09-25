@@ -2,10 +2,9 @@ FROM golang:1.10.2-alpine3.7 AS build
 RUN apk --no-cache add gcc g++ make ca-certificates
 WORKDIR /go/src/github.com/griffinup/yachtsearch
 
-COPY Gopkg.lock Gopkg.toml ./
 COPY vendor vendor
+COPY Gopkg.lock Gopkg.toml ./
 COPY util util
-COPY event event
 COPY db db
 COPY search search
 COPY schema schema

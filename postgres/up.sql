@@ -1,12 +1,19 @@
 DROP TABLE IF EXISTS yachts;
 CREATE TABLE yachts (
-  id VARCHAR(32) PRIMARY KEY,
+  id integer PRIMARY KEY,
   name VARCHAR(32) NOT NULL,
-  company VARCHAR(32) NOT NULL
+  company integer NOT NULL,
+  model integer NOT NULL
 );
 
-DROP TABLE IF EXISTS yachtbuilders;
-CREATE TABLE yachtbuilders (
-  id VARCHAR(32) PRIMARY KEY,
+DROP TABLE IF EXISTS companies;
+CREATE TABLE companies (
+  id integer PRIMARY KEY,
+  name VARCHAR(64) NOT NULL
+);
+
+DROP TABLE IF EXISTS models;
+CREATE TABLE models (
+  id integer PRIMARY KEY,
   name VARCHAR(64) NOT NULL
 );

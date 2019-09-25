@@ -27,5 +27,5 @@ func InsertYacht(ctx context.Context, yacht schema.Yacht) error {
 }
 
 func SearchYachts(ctx context.Context, query string, skip uint64, take uint64) ([]schema.Yacht, error) {
-	return impl.SearchYacht(ctx, query)
+	return impl.SearchYachts(ctx, query, skip, take)
 }
