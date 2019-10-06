@@ -15,5 +15,12 @@ CREATE TABLE companies (
 DROP TABLE IF EXISTS models;
 CREATE TABLE models (
   id integer PRIMARY KEY,
+  name VARCHAR(64) NOT NULL,
+  builder integer NOT NULL
+);
+
+DROP TABLE IF EXISTS builders;
+CREATE TABLE builders (
+  id integer PRIMARY KEY,
   name VARCHAR(64) NOT NULL
 );

@@ -79,5 +79,22 @@ func updateDBHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
+
+	//Get all yacht builders
+	body = util.ApiRequest("http://ws.nausys.com/CBMS-external/rest/catalogue/v6/yachtBuilders", `{"username":"` + cfg.NausysUser + `", "password":"` + cfg.NausysPassword + `"}`)
+
+	var allbuilders schema.BuildersAllResponse
+
+	if err := json.Unmarshal(body, &allbuilders); err != nil {
+		util.ResponseError(w, http.StatusInternalServerError, "Failed to parse companies response" + err.Error())
+		return
+	}
+
+	for _, builder := range allbuilders.Builders {
+		if err := db.InsertBuilder(ctx, builder); err != nil {
+			util.ResponseError(w, http.StatusInternalServerError, "Failed to insert builder" + err.Error())
+			return
+		}
+	}
 	util.ResponseOk(w, response{status: "OK"})
 }

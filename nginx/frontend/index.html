@@ -26,10 +26,10 @@
     class="mb-4"
     v-model="query"
     :data="users"
-    :serializer="item => item.name + ' / ' + item.yachtModelName"
+    :serializer="item => item.name"
     :minMatchingChars=3
-    placeholder="Yacht name / Model name"
-    prepend="Yacht or Model name:"
+    placeholder="Type the name..."
+    prepend="Model or Builder name:"
     @hit="searchAvailability($event)"
   >
 
@@ -47,7 +47,7 @@
 
         <!-- Note: the v-html binding is used, as htmlText contains
              the suggestion text highlighted with <strong> tags -->
-    <span class="ml-4" v-html="data.name"></span><br><span class="ml-4" v-html="data.yachtModelName"></span>
+    <span class="ml-4" v-html="data.type"></span>:<span class="ml-4" v-html="htmlText"></span>
 
     </div>
     </template>
@@ -72,14 +72,14 @@ new Vue({
   },
   methods: {
     searchUsers(newQuery) {
-      axios.get(`http://127.0.0.1:8080/search?query=${newQuery}`).
+      axios.get(`http://127.0.0.1:8080/search/${newQuery}`).
     then(res => {
     console.log(res.data);
     this.users = res.data;
     });
     },
     searchAvailability(event) {
-    axios.get(`http://127.0.0.1:8080/availinfo/${event.id ? 'id/' + event.id : 'name/' + this.query}`).
+    axios.get(`http://127.0.0.1:8080/info/${event.id ? event.type + '/' + event.id : 'name/' + this.query}`).
     then(res => {
     this.yachtAvailability = res.data;
     });

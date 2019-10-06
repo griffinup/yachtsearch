@@ -8,7 +8,6 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/griffinup/yachtsearch/db"
-	//"github.com/griffinup/yachtsearch/search"
 	"github.com/kelseyhightower/envconfig"
 	"github.com/tinrab/retry"
 )
@@ -21,7 +20,17 @@ type Config struct {
 
 func newRouter() (router *mux.Router) {
 	router = mux.NewRouter()
-	router.HandleFunc("/search", searchYachtsHandler).
+	//Live search
+	router.HandleFunc("/search/{query}", liveSearchHandler).
+		Methods("GET")
+	//Get yacht list by model
+	router.HandleFunc("/info/model/{id:[0-9]+}", infoYachtsByModelHandler).
+		Methods("GET")
+	//Get yacht list by builder
+	router.HandleFunc("/info/builder/{id:[0-9]+}", infoYachtsByBuilderHandler).
+		Methods("GET")
+	//Get yacht list by keyword (models + builders)
+	router.HandleFunc("/info/name/{query}", infoYachtsByNameHandler).
 		Methods("GET")
 	return
 }

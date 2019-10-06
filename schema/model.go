@@ -7,11 +7,19 @@ type Yacht struct {
 	Model	int `json:"yachtModelId"`
 }
 
-type YachtFull struct {
+type InfoResult struct {
+	ID	int		`json:"id"`
+	Name	string	`json:"name"`
+	ModelName	string	`json:"modelname"`
+	BuilderName	string	`json:"buildername"`
+	CompanyName	string	`json:"companyname"`
+	Avail	bool	`json:"avail"`
+}
+
+type LiveResult struct {
 	ID        int    `json:"id"`
 	Name      string    `json:"name"`
-	CompanyName	string `json:"companyName"`
-	ModelName	string `json:"yachtModelName"`
+	Type	string `json:"type"`
 }
 
 type YachtAllResponse struct {
@@ -32,11 +40,22 @@ type CompaniesAllResponse struct {
 type Model struct {
 	ID        int    `json:"id"`
 	Name      string    `json:"name"`
+	Builder      int    `json:"yachtBuilderId"`
 }
 
 type ModelsAllResponse struct {
 	Status   string `json:"status"`
 	Models []Model `json:"models"`
+}
+
+type Builder struct {
+	ID        int    `json:"id"`
+	Name      string    `json:"name"`
+}
+
+type BuildersAllResponse struct {
+	Status   string `json:"status"`
+	Builders []Builder `json:"builders"`
 }
 
 type YachtCompany struct {
